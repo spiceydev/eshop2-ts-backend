@@ -23,6 +23,10 @@ class UsersDao {
     return this.users;
   }
 
+  async getAllUsers() {
+    return this.users;
+  }
+
   async getUserById(userId: string) {
     return this.users.find((user: { id: string }) => user.id === userId);
   }
