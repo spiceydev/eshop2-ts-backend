@@ -57,6 +57,7 @@ class JwtMiddleware {
     if (req.headers['authorization']) {
       try {
         const authorization = req.headers['authorization'].split(' ');
+
         if (authorization[0] !== 'Bearer') {
           return res.status(401).send();
         } else {

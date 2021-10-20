@@ -8,7 +8,6 @@ class AuthMiddleware {
     res: express.Response,
     next: express.NextFunction
   ) {
-    console.log(`process.env`, process.env);
     const user: any = await usersService.getUserByEmailWithPassword(
       req.body.email
     );

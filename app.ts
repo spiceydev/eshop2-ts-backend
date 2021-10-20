@@ -39,6 +39,9 @@ const loggerOPtions: expressWinston.LoggerOptions = {
 
 if (!process.env.DEBUG) {
   loggerOPtions.meta = false; // when not debugging, log all requests as one-liners
+  if (typeof global.it === 'function') {
+    loggerOPtions.level = 'http'; // for non-debug test runs, squelch entirely
+  }
 }
 
 // initialize the logger with the above config
@@ -55,7 +58,7 @@ app.get('/', (req: express.Request, res: express.Response) => {
   res.status(200).send(runningMessage);
 });
 
-server.listen(port, () => {
+export default server.listen(port, () => {
   routes.forEach((route: CommonRoutesConfig) => {
     debugLog(`Routes configured for ${route.getName()}`);
   });

@@ -56,7 +56,7 @@ class UsersDao {
   }
 
   async getUserById(userId: string) {
-    return this.User.find({ _id: userId }).exec();
+    return this.User.findOne({ _id: userId }).exec();
   }
 
   async updateUserById(userId: string, userFields: PatchUserDto | PutUserDto) {

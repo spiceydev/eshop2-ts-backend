@@ -87,6 +87,20 @@ export class UsersRoutes extends CommonRoutesConfig {
       usersController.patch,
     ]);
 
+    /**
+     * This route does not currently require extra permissions.
+     *
+     * Please update it for admin usage in your own application!
+     */
+    this.app.put(`/users/:userId/permissionFlags/:permissionFlags`, [
+      jwtMiddleware.validJWTNeeded,
+      // permissionMiddleware.onlySameUserOrAdminCanDoThisAction,
+      // permissionMiddleware.permissionFlagRequired(
+      //   PermissionFlag.FREE_PERMISSION
+      // ),
+      usersController.updatePermissionFlags,
+    ]);
+
     return this.app;
   }
 }
