@@ -38,7 +38,7 @@ class UsersMiddleware {
     next: express.NextFunction
   ) {
     const user = await usersService.getUserByEmail(req.body.email);
-    if (user && user.id === req.params.userId) {
+    if (user && user._id === req.params.userId) {
       next();
     } else {
       return res.status(400).send({ error: 'Invalid email' });
@@ -73,6 +73,15 @@ class UsersMiddleware {
         error: `User ${req.params.userId} not found`,
       });
     }
+  }
+
+  async extractUserId(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    req.body.id = req.params.userId;
+    next();
   }
 }
 

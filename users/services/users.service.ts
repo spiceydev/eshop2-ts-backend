@@ -6,7 +6,7 @@ import { PutUserDto } from '../dto/put.user.dto';
 
 class UsersService implements CRUD {
   async list(limit: number, page: number) {
-    return usersDao.getUsers();
+    return usersDao.getUsers(limit, page);
   }
 
   async listAll() {
@@ -18,11 +18,11 @@ class UsersService implements CRUD {
   }
 
   async putById(id: string, resource: PutUserDto) {
-    return usersDao.putUserById(id, resource);
+    return usersDao.updateUserById(id, resource);
   }
 
   async patchById(id: string, resource: PatchUserDto) {
-    return usersDao.patchUserById(id, resource);
+    return usersDao.updateUserById(id, resource);
   }
 
   async readById(id: string) {

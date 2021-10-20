@@ -23,14 +23,14 @@ class UsersController {
   }
 
   async createUser(req: express.Request, res: express.Response) {
-    req.body.password = await this.hashPassword(req.body.password);
+    req.body.password = await argon2.hash(req.body.password);
     const userId = await usersService.create(req.body);
     return res.status(200).send({ id: userId });
   }
 
   async patch(req: express.Request, res: express.Response) {
     if (req.body.password) {
-      req.body.password = await this.hashPassword(req.body.password);
+      req.body.password = await argon2.hash(req.body.password);
     }
     log(await usersService.patchById(req.body.id, req.body));
     return res.status(204).send();
@@ -38,14 +38,14 @@ class UsersController {
 
   async put(req: express.Request, res: express.Response) {
     if (req.body.password) {
-      req.body.password = await this.hashPassword(req.body.password);
+      req.body.password = await argon2.hash(req.body.password);
     }
     log(await usersService.putById(req.body.id, req.body));
     return res.status(204).send();
   }
-
-  async hashPassword(password: string) {
-    return await argon2.hash(password);
+  async removeUser(req: express.Request, res: express.Response) {
+    log(await usersService.deleteById(req.body.id));
+    res.status(204).send();
   }
 }
 
