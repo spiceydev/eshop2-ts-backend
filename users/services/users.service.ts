@@ -32,6 +32,10 @@ class UsersService implements CRUD {
   async deleteById(id: string) {
     return usersDao.removeUserById(id);
   }
+
+  async getUserByEmail(email: string) {
+    return usersDao.getUserByEmail(email);
+  }
 }
 
 export default new UsersService();
