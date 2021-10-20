@@ -1,3 +1,9 @@
+import dotenv from 'dotenv';
+const dotenvResult = dotenv.config();
+if (dotenvResult.error) {
+  throw dotenvResult.error;
+}
+
 import express from 'express';
 import * as http from 'http';
 import * as winston from 'winston';
@@ -5,6 +11,7 @@ import * as expressWinston from 'express-winston';
 import cors from 'cors';
 import { CommonRoutesConfig } from './common/common.routes.config';
 import { UsersRoutes } from './users/user.routes.config';
+import { AuthRoutes } from './auth/auth.routes.config';
 import debug from 'debug';
 
 const app: express.Application = express();
@@ -37,9 +44,10 @@ if (!process.env.DEBUG) {
 // initialize the logger with the above config
 app.use(expressWinston.logger(loggerOPtions));
 
-// dding the UserRoutes to the routes array,
+// adding all routes to the routes array,
 // after sending the Express.js application object to have the routes added to the app!
 routes.push(new UsersRoutes(app));
+routes.push(new AuthRoutes(app));
 
 // this is a simple route to make sure everything is working properly
 const runningMessage = `Server running at http://localhost:${port}`;

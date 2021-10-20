@@ -5,6 +5,9 @@ import usersController from './controllers/users.controller';
 import usersMiddleware from './middleware/users.middleware';
 import { body } from 'express-validator';
 import bodyValidationMiddleware from '../common/middleware/body.validation.middleware';
+import jwtMiddleware from '../auth/middleware/jwt.middleware';
+import permissionMiddleware from '../common/middleware/common.permission.middleware';
+import { PermissionFlag } from '../common/middleware/common.permissionflag.enum';
 export class UsersRoutes extends CommonRoutesConfig {
   constructor(app: express.Application) {
     super(app, 'UsersRoutes');
@@ -13,7 +16,13 @@ export class UsersRoutes extends CommonRoutesConfig {
   configureRoutes(): express.Application {
     this.app
       .route('/users')
-      .get(usersController.listUsers)
+      .get(
+        jwtMiddleware.validJWTNeeded,
+        permissionMiddleware.permissionFlagRequired(
+          PermissionFlag.ADMIN_PERMISSION
+        ),
+        usersController.listUsers
+      )
       .post(
         body('email').isEmail(),
         body('password')
@@ -27,7 +36,11 @@ export class UsersRoutes extends CommonRoutesConfig {
     this.app.param('userId', usersMiddleware.extractUserId);
     this.app
       .route('/users/:userId')
-      .all(usersMiddleware.validateUserExists)
+      .all(
+        usersMiddleware.validateUserExists,
+        jwtMiddleware.validJWTNeeded,
+        permissionMiddleware.onlySameUserOrAdminCanDoThisAction
+      )
       .get(usersController.getUserById)
       .delete(usersController.removeUser);
 
@@ -45,6 +58,10 @@ export class UsersRoutes extends CommonRoutesConfig {
       body('country').isString(),
       bodyValidationMiddleware.verifyBodyFieldsErrors,
       usersMiddleware.validateSameEmailBelongToSameUser,
+      usersMiddleware.userCantChangePermission,
+      permissionMiddleware.permissionFlagRequired(
+        PermissionFlag.PAID_PERMISSION
+      ),
       usersController.put,
     ]);
 
@@ -63,6 +80,10 @@ export class UsersRoutes extends CommonRoutesConfig {
       body('country').isString().optional(),
       bodyValidationMiddleware.verifyBodyFieldsErrors,
       usersMiddleware.validatePatchEmail,
+      usersMiddleware.userCantChangePermission,
+      permissionMiddleware.permissionFlagRequired(
+        PermissionFlag.PAID_PERMISSION
+      ),
       usersController.patch,
     ]);
 

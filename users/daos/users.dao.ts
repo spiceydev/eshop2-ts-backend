@@ -56,7 +56,7 @@ class UsersDao {
   }
 
   async getUserById(userId: string) {
-    return this.User.find({ _id: userId }).populate('User').exec();
+    return this.User.find({ _id: userId }).exec();
   }
 
   async updateUserById(userId: string, userFields: PatchUserDto | PutUserDto) {
@@ -74,6 +74,12 @@ class UsersDao {
 
   async getUserByEmail(email: string) {
     return this.User.findOne({ email: email }).exec();
+  }
+
+  async getUserByEmailWithPassword(email: string) {
+    return this.User.findOne({ email: email })
+      .select('_id email permissionFlags +password')
+      .exec();
   }
 }
 
