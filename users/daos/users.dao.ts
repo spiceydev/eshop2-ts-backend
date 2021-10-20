@@ -5,7 +5,7 @@ import shortid from 'shortid';
 import debug from 'debug';
 import mongooseService from '../../common/services/mongoose.service';
 
-const log: debug.IDebugger = debug('app:in-memory-dao');
+const log: debug.IDebugger = debug('app:user-dao');
 
 class UsersDao {
   users: Array<CreateUserDto> = [];

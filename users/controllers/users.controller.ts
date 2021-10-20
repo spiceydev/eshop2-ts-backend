@@ -13,7 +13,7 @@ class UsersController {
     return res.status(200).send(users);
   }
 
-  async listAllUser(req: express.Request, res: express.Response) {
+  async listAllUsers(req: express.Request, res: express.Response) {
     const users = await usersService.listAll();
     return res.status(200).send(users);
   }
