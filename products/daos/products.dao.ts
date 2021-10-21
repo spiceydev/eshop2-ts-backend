@@ -53,7 +53,7 @@ class ProductsDao {
       },
       category: {
         type: this.Schema.Types.ObjectId,
-        ref: 'Category',
+        ref: 'Categories',
         required: true,
       },
       countInStock: {
