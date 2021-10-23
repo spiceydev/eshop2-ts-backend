@@ -9,7 +9,7 @@ import { CreateUserDto } from '../../users/dto/create.user.dto';
 const log: debug.IDebugger = debug('app:product-dao');
 
 class ProductsDao {
-  users: Array<CreateProductDto> = [];
+  products: Array<CreateProductDto> = [];
   Schema = mongooseService.getMongoose().Schema;
 
   constructor() {
