@@ -16,6 +16,7 @@ import debug from 'debug';
 import helmet from 'helmet';
 import { ProductsRoutes } from './products/product.routes.config';
 import { CategoriesRoutes } from './categories/category.routes.config';
+import { OrdersRoutes } from './orders/orders.routes.config';
 
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
@@ -58,6 +59,7 @@ routes.push(new UsersRoutes(app));
 routes.push(new AuthRoutes(app));
 routes.push(new ProductsRoutes(app));
 routes.push(new CategoriesRoutes(app));
+routes.push(new OrdersRoutes(app));
 
 // this is a simple route to make sure everything is working properly
 const runningMessage = `Server running at http://localhost:${port}`;

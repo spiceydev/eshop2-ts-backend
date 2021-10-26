@@ -1,11 +1,10 @@
 import express from 'express';
-
 import { body } from 'express-validator';
-import bodyValidationMiddleware from '../common/middleware/body.validation.middleware';
 import jwtMiddleware from '../auth/middleware/jwt.middleware';
+import { CommonRoutesConfig } from '../common/common.routes.config';
+import bodyValidationMiddleware from '../common/middleware/body.validation.middleware';
 import permissionMiddleware from '../common/middleware/common.permission.middleware';
 import { PermissionFlag } from '../common/middleware/common.permissionflag.enum';
-import { CommonRoutesConfig } from '../common/common.routes.config';
 import productsController from './controllers/products.controller';
 import productMiddleware from './middleware/product.middleware';
 
@@ -32,6 +31,7 @@ export class ProductsRoutes extends CommonRoutesConfig {
         body('numReviews').isNumeric(),
         body('isFeatured').isBoolean(),
         body('dateCreated').isDate(),
+        jwtMiddleware.validJWTNeeded,
         bodyValidationMiddleware.verifyBodyFieldsErrors,
         productMiddleware.validateSameNameDoesNotExist,
         permissionMiddleware.permissionFlagRequired(
@@ -71,6 +71,7 @@ export class ProductsRoutes extends CommonRoutesConfig {
       body('numReviews').isNumeric(),
       body('isFeatured').isBoolean(),
       body('dateCreated').isDate(),
+      jwtMiddleware.validJWTNeeded,
       bodyValidationMiddleware.verifyBodyFieldsErrors,
       permissionMiddleware.permissionFlagRequired(
         PermissionFlag.ADMIN_PERMISSION
@@ -93,6 +94,7 @@ export class ProductsRoutes extends CommonRoutesConfig {
       body('numReviews').isNumeric().optional(),
       body('isFeatured').isBoolean().optional(),
       body('dateCreated').isDate().optional(),
+      jwtMiddleware.validJWTNeeded,
       bodyValidationMiddleware.verifyBodyFieldsErrors,
       permissionMiddleware.permissionFlagRequired(
         PermissionFlag.ADMIN_PERMISSION

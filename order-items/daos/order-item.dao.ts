@@ -6,7 +6,7 @@ import debug from 'debug';
 import mongooseService from '../../common/services/mongoose.service';
 import { CreateUserDto } from '../../users/dto/create.user.dto';
 
-const log: debug.IDebugger = debug('app:product-dao');
+const log: debug.IDebugger = debug('app:order-item-dao');
 
 class OrderItemsDao {
   orderItems: Array<CreateOrderItemDto> = [];

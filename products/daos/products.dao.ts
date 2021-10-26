@@ -1,10 +1,9 @@
-import { CreateProductDto } from '../dto/create.product.dto';
-import { PutProductDto } from '../dto/put.product.dto';
-import { PatchProductDto } from '../dto/patch.product.dto';
-import shortid from 'shortid';
 import debug from 'debug';
+import shortid from 'shortid';
 import mongooseService from '../../common/services/mongoose.service';
-import { CreateUserDto } from '../../users/dto/create.user.dto';
+import { CreateProductDto } from '../dto/create.product.dto';
+import { PatchProductDto } from '../dto/patch.product.dto';
+import { PutProductDto } from '../dto/put.product.dto';
 
 const log: debug.IDebugger = debug('app:product-dao');
 

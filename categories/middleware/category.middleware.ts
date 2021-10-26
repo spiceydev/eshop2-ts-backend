@@ -1,8 +1,6 @@
-import express from 'express';
-
 import debug from 'debug';
+import express from 'express';
 import categoriesService from '../services/categories.service';
-import categoriesController from '../controllers/categories.controller';
 
 const log: debug.IDebugger = debug('app:categories-middleware');
 
